@@ -1,10 +1,6 @@
 <?php
 $Titulo = "Editar Perfil";
 include_once '../Estructura/cabecera.php';
-if (!$sesion->verificarPermiso('../Cliente/modificarPerfil.php')) {
-    $mensaje = "No tiene permiso para acceder a este sitio.";
-    echo "<script> window.location.href='../Home/index.php?mensaje=" . urlencode($mensaje) . "'</script>";
-} else {
     if ($sesion->getNombreUsuarioLogueado() <> null) {
         $datosUser = [
             'idusuario' => $sesion->getIDUsuarioLogueado(),
@@ -51,4 +47,4 @@ if (!$sesion->verificarPermiso('../Cliente/modificarPerfil.php')) {
         $mensaje = "No estas logeado";
         echo "<script> window.location.href='../Home/index.php?mensaje=" . urlencode($mensaje) . "'</script>";
     }
-}
+

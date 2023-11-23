@@ -134,7 +134,8 @@ class abmMenu
             $fecha = null;
             if (isset($datos['accion']) && $datos['accion'] == 'deshabilitar') {
                 date_default_timezone_set('America/Argentina/Buenos_Aires');
-                $fecha = date('Y-m-d H:i:s');
+                $currentDateTime = new DateTime();
+                $fecha = $currentDateTime->format('Y-m-d H:i:s');
             }
            
 

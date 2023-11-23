@@ -1,10 +1,6 @@
 <?php
 $Titulo = "Tabla Usuarios";
 include_once '../Estructura/cabecera.php';
-if (!$sesion->verificarPermiso('../Admin/tablaUsuarios.php')) {
-    $mensaje = "No tiene permiso para acceder a este sitio.";
-    echo "<script> window.location.href='../Home/index.php?mensaje=" . urlencode($mensaje) . "'</script>";
-} else {
     $objUsuarios = new abmUsuario();
     $listaUsuario = $objUsuarios->buscar(null);
     $objRol = new abmRol();
@@ -46,4 +42,4 @@ if (!$sesion->verificarPermiso('../Admin/tablaUsuarios.php')) {
 <?php
     }
     include_once '../Estructura/pie.php';
-} ?>
+ ?>

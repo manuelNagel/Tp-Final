@@ -69,13 +69,23 @@ class compraEstado extends BaseDatos{
         //Setear fecha fin cuando el admin apruebe la compra (fecha)
         $resp = false;
         // Si lleva ID Autoincrement, la consulta SQL no lleva dicho ID
-        $sql="INSERT INTO compraestado(idcompra, idcompraestadotipo, cefechaini, cefechafin) 
+        if($this->getCeFechaFin()===null){
+            $sql="INSERT INTO compraestado(idcompra, idcompraestadotipo, cefechaini) 
+            VALUES('"
+            .$this->getObjCompra()->getID()."', '"
+            .$this->getObjCompraEstadoTipo()->getID()."', '"
+            .$this->getCeFechaIni()."'
+        );";
+        }else{
+            $sql="INSERT INTO compraestado(idcompra, idcompraestadotipo, cefechaini, cefechafin) 
             VALUES('"
             .$this->getObjCompra()->getID()."', '"
             .$this->getObjCompraEstadoTipo()->getID()."', '"
             .$this->getCeFechaIni()."', '"
             .$this->getCeFechaFin()."'
         );";
+        }
+        
         if ($this->Iniciar()) {
             if ($esteid = $this->Ejecutar($sql)) {
                 // Si se usa ID autoincrement, descomentar lo siguiente:
@@ -92,12 +102,15 @@ class compraEstado extends BaseDatos{
     
     public function modificar(){
         $resp = false;
+        $fechafin= $this->getCeFechaFin();
+        
         $sql="UPDATE compraestado 
-        SET idcompra='".$this->getObjCompra()->getID()
-        ."', idcompraestadotipo='".$this->getObjCompraEstadoTipo()->getID()
-        ."', cefechaini='".$this->getCeFechaIni()
-        ."', cefechafin='".$this->getCeFechaFin()
-        ."' WHERE idcompraestado='".$this->getID()."'";
+        SET idcompra = '" . $this->getObjCompra()->getID() . "',
+            idcompraestadotipo = '" . $this->getObjCompraEstadoTipo()->getID() . "',
+            cefechaini = '" . $this->getCeFechaIni() . "',
+            cefechafin = " . ($fechafin !== null ? "'" . $fechafin . "'" : "NULL") . "
+        WHERE idcompraestado = '" . $this->getID() . "'";
+       
         if ($this->Iniciar()) {
             if ($this->Ejecutar($sql)) {
                 $resp = true;

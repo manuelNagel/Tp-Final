@@ -27,7 +27,7 @@ function agregar(arreglo) {
   console.log(arreglo);
   $.ajax({
     type: "POST",
-    url: "./accion/altaRol.php",
+    url: "./accion/rol/altaRol.php",
     data: arreglo,
     success: function (response) {
       var response = jQuery.parseJSON(response);
@@ -151,7 +151,7 @@ $(document).on("click", ".eliminar", function () {
 function eliminar(idrol) {
   $.ajax({
     type: "POST",
-    url: "./accion/eliminarRol.php",
+    url: "./accion/rol/eliminarRol.php",
     data: { idrol: idrol },
     success: function (response) {
       var response = jQuery.parseJSON(response);

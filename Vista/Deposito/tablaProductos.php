@@ -1,10 +1,7 @@
 <?php
 $Titulo = "Tabla Productos";
 include_once '../Estructura/cabecera.php';
-if (!$sesion->verificarPermiso('../Deposito/tablaProductos.php')) {
-    $mensaje = "No tiene permiso para acceder a este sitio.";
-    echo "<script> window.location.href='../Home/index.php?mensaje=" . urlencode($mensaje) . "'</script>";
-} else {
+
     $objItems = new abmProducto();
     $listaProds = $objItems->buscar(null);
     if (count($listaProds) > 0) {
@@ -84,4 +81,4 @@ if (!$sesion->verificarPermiso('../Deposito/tablaProductos.php')) {
 <?php
     }
     include_once '../Estructura/pie.php';
-} ?>
+ ?>

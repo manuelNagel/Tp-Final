@@ -57,13 +57,22 @@ class usuario extends BaseDatos{
         $resp = false;
         
         // Si lleva ID Autoincrement, la consulta SQL no lleva dicho ID
-        $sql="INSERT INTO usuario(usnombre, uspass, usmail, usdeshabilitado) 
+        if($this->getUsDeshabilitado()==null||$this->getUsDeshabilitado()=='null'||$this->getUsDeshabilitado()=='0000-00-00 00:00:00'){
+            $sql="INSERT INTO usuario(usnombre, uspass, usmail) 
             VALUES('"
             .$this->getUsNombre()."', '"
             .$this->getUsPass()."', '"
-            .$this->getUsMail()."', '"
-            .$this->getUsDeshabilitado()."'
+            .$this->getUsMail()."'
         );";
+        }else{
+            $sql="INSERT INTO usuario(usnombre, uspass, usmail, usdeshabilitado) 
+                VALUES('"
+                .$this->getUsNombre()."', '"
+                .$this->getUsPass()."', '"
+                .$this->getUsMail()."', '"
+                .$this->getUsDeshabilitado()."'
+            );";
+        }
         
         if ($this->Iniciar()) {
             if ($esteid = $this->Ejecutar($sql)) {

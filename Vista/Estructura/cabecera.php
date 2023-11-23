@@ -28,7 +28,25 @@
     <?php
     include_once '../../configuracion.php';
     $sesion = new Session();
+    
     ?>
 </head>
-<?php include_once("../../Vista/Estructura/menu.php") ?>
+<?php include_once("../../Vista/Estructura/menu.php") ;
+$param = $_SERVER['REQUEST_URI'];
+echo "<script>console.log('Debug Objects: " . $param . "' );</script>";
+$substringToRemove = "Home/";
+$url = str_replace($substringToRemove, "", $param);
+$url = str_replace("Vista/", "", $param);
+if(!(strpos($url, "registro.php") !== false || strpos($url, "login.php") !== false||strpos($url, "index.php") !== false||strpos($url, "productos.php") !== false)){
+    
+    $url = '..'.$url;
+    if (!$sesion->verificarPermiso($url)) {
+        $mensaje = "No tiene permiso para acceder a este sitio.";
+    
+        echo "<script> window.location.href='../Home/index.php?mensaje=" . urlencode($mensaje) . "'</script>";
+        
+    }
+
+}
+    ?>
 <!-- FIN CABECERA -->

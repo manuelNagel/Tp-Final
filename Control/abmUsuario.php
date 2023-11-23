@@ -316,7 +316,8 @@ class abmUsuario
             $objUs = $this->buscar(['idusuario' => $data['idusuario']]);
             $fecha = null;
             if ($data['accion'] == "deshabilitar") {
-                $fecha = date('Y-m-d H:i:s');
+                $currentDateTime = new DateTime();
+                $fecha = $currentDateTime->format('Y-m-d H:i:s');
             }
             $objUs[0]->setUsdeshabilitado($fecha);
             $respuesta = $objUs[0]->modificar();
@@ -326,8 +327,6 @@ class abmUsuario
 
     public function crearUsuario($data)
     {
-        echo "<script>console.log( 'Debug Objects: " . $data . "' );</script>";
-        echo "llego a la funcion";
         $respuesta = false;
         if (!$this->usuarioExiste($data['usnombre'], $data['usmail'])) {
 
@@ -341,8 +340,7 @@ class abmUsuario
                 }
             }
         }
-        echo "<script>console.log( 'Debug Objects: " . $respuesta . "' );</script>";
-        echo $respuesta."/.";
+       
         return $respuesta;
     }
 

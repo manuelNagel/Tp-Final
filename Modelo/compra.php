@@ -12,7 +12,9 @@ class compra extends BaseDatos
     {
         parent::__construct();
         $this->idcompra = "";
-        $this->cofecha = date('Y-m-d H:i:s');
+        $currentDateTime = new DateTime();
+        $fecha = $currentDateTime->format('Y-m-d H:i:s');
+        $this->cofecha = $fecha;
         $this->objusuario = "";
         $this->mensajeoperacion = "";
     }

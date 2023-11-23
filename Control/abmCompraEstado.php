@@ -267,7 +267,8 @@ class abmCompraEstado
     {
         $resp = false;
         date_default_timezone_set('America/Argentina/Buenos_Aires');
-        $fechaFin = date('Y-m-d H:i:s'); //FECHA FIN
+        $currentDateTime = new DateTime();
+        $fechaFin = $currentDateTime->format('Y-m-d H:i:s');//FECHA FIN
         $obj->setCeFechaFin($fechaFin);
         
         if ($obj->modificar()) { // SI SE PUDO MODIFICAR EL ESTADO ANTERIOR, AGREGAMOS EL NUEVO

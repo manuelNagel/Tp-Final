@@ -1,10 +1,6 @@
 <?php
 $Titulo = "Tabla Roles";
 include_once '../Estructura/cabecera.php';
-if (!$sesion->verificarPermiso('../Admin/tablaRoles.php')) {
-    $mensaje = "No tiene permiso para acceder a este sitio.";
-    echo "<script> window.location.href='../Home/index.php?mensaje=" . urlencode($mensaje) . "'</script>";
-} else {
     $objRoles = new abmRol();
     $listaRoles = $objRoles->buscar(null);
 
@@ -76,4 +72,4 @@ if (!$sesion->verificarPermiso('../Admin/tablaRoles.php')) {
 <?php
     }
     include_once '../Estructura/pie.php';
-} ?>
+ ?>

@@ -249,6 +249,7 @@ class abmCompra
 
 public function crearCarrito($idUser){
     date_default_timezone_set('America/Argentina/Buenos_Aires');
+    
     $carrito=null;
     $objAbmCompra = new abmCompra();
     $param= array(
@@ -265,11 +266,13 @@ public function crearCarrito($idUser){
         $listaCompras=$this->buscar($paramIDUsuario);
         $posCompra=count($listaCompras)-1;//la ultima compra que cree es el carrito
         $idCompra=$listaCompras[$posCompra]->getID();
+        $currentDateTime = new DateTime();
+        $fecha = $currentDateTime->format('Y-m-d H:i:s');
         $paramCompraEstado= array(
             'idcompra'=>$idCompra, 
             'idcompraestadotipo'=>5, 
             'cefechaini'=>date('Y-m-d H:i:s'),//ver lo de la hora actual
-            'cefechafin'=>'0000-00-00 00:00:00');// ver el null
+            'cefechafin'=>null);// ver el null
         $respuesta=$objAbmCompraEstado->altaSinID($paramCompraEstado);
         if($respuesta){//si se creo el estado compra, devuelvo el carrito
             $carrito=$listaCompras[$posCompra];
@@ -316,7 +319,8 @@ public function crearCarrito($idUser){
         $respuesta = false;
         $objCE = new abmCompraEstado();
         $list = $objCE->buscar(['idcompraestado' => $data['idcompraestado']]);
-
+        $currentDateTime = new DateTime();
+        $fecha = $currentDateTime->format('Y-m-d H:i:s');
         foreach ($list as $elem) { //RECORREMOS CADA COMPRA ESTADO
             date_default_timezone_set('America/Argentina/Buenos_Aires');
             $idCET = $elem->getObjCompraEstadoTipo()->getID(); //OBTENEMOS EL ID DEL TIPO DE ESTADO
@@ -382,12 +386,14 @@ public function crearCarrito($idUser){
         date_default_timezone_set('America/Argentina/Buenos_Aires');
         $respuesta=false;
         $objAbmCompraEstado= new abmCompraEstado();
+        $currentDateTime = new DateTime();
+        $formattedDateTime = $currentDateTime->format('Y-m-d H:i:s');
         $idCompra=$carrito->getID();
         $paramCompra= array(
             'idcompra'=>$idCompra,
             'idcompraestadotipo'=>1,
             'cefechaini'=>date('Y-m-d H:i:s'),
-            'cefechafin'=>'0000-00-00 00:00:00'
+            'cefechafin'=>null
         );
     
         $respuesta=$objAbmCompraEstado->altaSinID($paramCompra);
@@ -400,14 +406,16 @@ public function crearCarrito($idUser){
             );
             $listaCompraEstado = $objAbmCompraEstado->buscar($param);
             if (count($listaCompraEstado) > 0) {
+                $currentDateTime = new DateTime();
+                $fecha = $currentDateTime->format('Y-m-d H:i:s');
                 $idCompraEstado = $listaCompraEstado[0]->getID();
                 $paramEdicion = array(
                     'idcompraestado' => $idCompraEstado,
                     'idcompra'=>$idCompra,
                     'idcompraestadotipo'=>5,
                     'cefechaini'=>$listaCompraEstado[0]->getCeFechaIni(),
-                    'cefechafin' => date('Y-m-d H:i:s')
-                );
+                    'cefechafin' => date('Y-m-d H:i:s'))
+                ;
                 $respuesta = $objAbmCompraEstado->modificacion($paramEdicion);
             }
             

@@ -75,7 +75,18 @@ class producto extends BaseDatos
         $resp = false;
         
         // Si lleva ID Autoincrement, la consulta SQL no lleva dicho ID
-        $sql="INSERT INTO producto(pronombre, prodetalle, procantstock, precio, prodeshabilitado, imagen) 
+        
+        if($this->getProDeshabilitado()==null||$this->getProDeshabilitado()=='0000-00-00 00:00:00'||$this->getProDeshabilitado()=='null'){
+            $sql="INSERT INTO producto(pronombre, prodetalle, procantstock, precio, imagen) 
+            VALUES('"
+            .$this->getPronombre()."', '"
+            .$this->getProdetalle()."', '"
+            .$this->getProCantStock()."', '"
+            .$this->getPrecio()."', '"
+            .$this->getImagen()."'
+        );";
+        }else{
+            $sql="INSERT INTO producto(pronombre, prodetalle, procantstock, precio, prodeshabilitado, imagen) 
             VALUES('"
             .$this->getPronombre()."', '"
             .$this->getProdetalle()."', '"
@@ -84,6 +95,7 @@ class producto extends BaseDatos
             .$this->getProDeshabilitado()."', '"
             .$this->getImagen()."'
         );";
+        }
         if ($this->Iniciar()) {
             if ($esteid = $this->Ejecutar($sql)) {
                 // Si se usa ID autoincrement, descomentar lo siguiente:
@@ -102,7 +114,16 @@ class producto extends BaseDatos
     {
         $resp = false;
         
-        $sql="UPDATE producto 
+        if($this->getProDeshabilitado()===null ||$this->getProDeshabilitado()=='0000-00-00 00:00:00'){
+            $sql="UPDATE producto 
+        SET pronombre='".$this->getProNombre()
+        ."', prodetalle='".$this->getProDetalle()
+        ."', procantstock='". $this->getProCantStock()
+        ."', precio='". $this->getPrecio()
+        ."', imagen='". $this->getImagen()
+        ."' WHERE idproducto='".$this->getID()."'";
+        }else{
+            $sql="UPDATE producto 
         SET pronombre='".$this->getProNombre()
         ."', prodetalle='".$this->getProDetalle()
         ."', procantstock='". $this->getProCantStock()
@@ -110,6 +131,8 @@ class producto extends BaseDatos
         ."', prodeshabilitado='". $this->getProDeshabilitado()
         ."', imagen='". $this->getImagen()
         ."' WHERE idproducto='".$this->getID()."'";
+        }
+        
         if ($this->Iniciar()) {
             if ($this->Ejecutar($sql)) {
                 $resp = true;

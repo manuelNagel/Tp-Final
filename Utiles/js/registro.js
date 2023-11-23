@@ -5,7 +5,7 @@ $('#registro').submit(function (e) {
     e.stopImmediatePropagation();
 
     var inputs = $('#registro :input');
-    var uspass = inputs[2].value;
+    var uspass = inputs[3].value;
     var pass = hex_md5(uspass);
 
     arreglo = {
